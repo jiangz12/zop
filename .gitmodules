@@ -1,3 +1,6 @@
 [submodule "src/components/fusion"]
 	path = src/components/fusion
 	url = https://github.com/jiangz12/fusion.git
+[submodule "src/components/planning"]
+	path = src/components/planning
+	url = https://github.com/jiangz12/planning.git
