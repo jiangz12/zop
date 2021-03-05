@@ -1,0 +1,3 @@
+[submodule "src/components/fusion"]
+	path = src/components/fusion
+	url = https://github.com/jiangz12/fusion.git
