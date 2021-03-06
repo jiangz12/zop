@@ -16,10 +16,11 @@ DOT_GIT = "/.git"
 SUB_PATH = script_path + '/' + SUBMODULE_DIR + '/'
 GIT_PULL = "git pull"
 GIT_PUSH = "git push"
+GIT_ADD_ALL = "git add ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
-DIFF = "git diff --quiet --cached --exit-code"
+DIFF = "git diff --quiet --exit-code"
 
 
 def script(cmd): # normally return 0, other means error
@@ -60,9 +61,11 @@ def g_commit(comment):
         if os.path.exists(SUB_PATH + subdir + DOT_GIT) and os.system(DIFF) == 1:
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
+            script(GIT_ADD_ALL)
             script(GIT_COMMIT + comment)
             os.chdir(script_path)
             print("***commit " + SUB_PATH + subdir + " done***\n")
+    script(GIT_ADD_ALL)
     script(GIT_COMMIT + comment)
     print("***commit " + script_path + " done***\n")
 
