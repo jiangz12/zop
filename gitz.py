@@ -47,6 +47,7 @@ def g_clone():
         script(GIT_SUB_PULL + SUBMODULE_DIR + '/' + subdir)
         if not os.path.exists(SUB_PATH + subdir):
             script(RESET)
+        print("***clone " + SUB_PATH + subdir + " done***\n")
 
 
 # Overwrite git commit
