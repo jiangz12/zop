@@ -21,7 +21,6 @@ RESET = "git reset --h"
 
 
 def script(cmd): # normally return 0, other means error
-    print (cmd)
     ret = subprocess.call(cmd, shell = True)
     if ret != 0:
         print("Failed: " + cmd)
@@ -52,6 +51,7 @@ def g_clone():
 # Overwrite git commit
 def g_commit(comment):
     # commit changes to each owned submodule
+    comment = "'" + comment + "'"
     for subdir in os.listdir(script_path + '/' + SUBMODULE_DIR):
         # check submodule .git file exists or not
         if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
@@ -59,7 +59,7 @@ def g_commit(comment):
             script("cd " + os.path.realpath(subdir))
             script(GIT_COMMIT + comment)
             script("cd " + script_path)
-    script(IT_COMMIT + comment)
+    script(GIT_COMMIT + comment)
 
 
 # Overwrite git push
@@ -129,12 +129,12 @@ def _script_branch_del_helper(branch_name):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--del_branch", type=str, default='master', help='Branch to be deleted locally')
-parser.add_argument("-m", "--mk_branch", type=str, default='master', help='Branch to be created both locally and remotely')
+parser.add_argument("-d", "--del_branch", type=str, default='', help='Branch to be deleted locally')
+parser.add_argument("-m", "--mk_branch", type=str, default='', help='Branch to be created both locally and remotely')
 parser.add_argument("-pl", "--pull", help='Pull and Sync current developing branch and submodules together', action = "store_true")
 parser.add_argument("-ps", "--push", help='Push current branch to master of submodules and main project', action = "store_true")
 parser.add_argument("-cl", "--clone", help='Clone the submodules from the remote repository', action = "store_true")
-parser.add_argument("-co", "--commit", type=str, default='commit the changes', help='Commit the changes in submodules and main project')
+parser.add_argument("-co", "--commit", type=str, default='', help='Commit the changes in submodules and main project')
 args = parser.parse_args()
 
 
@@ -142,21 +142,23 @@ args = parser.parse_args()
 if __name__  == "__main__":
     if args.pull:
         g_pull()
-    if args.push:
+    elif args.push:
         g_push()
-    if args.clone:
+    elif args.clone:
         g_clone()
-    if args.commit != "commit the changes":
+    elif args.commit:
         g_commit(args.commit)
-    else:
-        print("Add appropriated commit comments.")
-    if args.del_branch != 'master':
-        print("Branch to be deleted : "+args.del_branch)
-        g_branch_del(args.del_branch)
-    else:
-        print("Invalid branch name to be deleted. Type -h for help")
-    if args.mk_branch != 'master':
-        print("Branch to be created : "+args.mk_branch)
-        g_branch_co(args.mk_branch)
-    else:
-        print("Invalid branch name to be created. Type -h for help")
+    elif not args.del_branch:
+        branch = input("Please give a branch name: ")
+        if branch != 'master':
+            print("Branch to be deleted : " + branch)
+            g_branch_del(branch)
+        else:
+            print("Invalid branch name to be deleted. Type -h for help")
+    elif not args.mk_branch:
+        branch = input("Please give a branch name: ")
+        if branch != 'master':
+            print("Branch to be created : " + branch)
+            g_branch_co(branch)
+        else:
+            print("Invalid branch name to be created. Type -h for help")
