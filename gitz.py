@@ -13,6 +13,7 @@ script_path = os.path.dirname(script_path)
 PROJECT_CLONE_URL = "ssh://git@10.133.14.52:4040/zop/zop.git"
 SUBMODULE_DIR = "src/components"
 DOT_GIT = "/.git"
+SUB_PATH = script_path + '/' + SUBMODULE_DIR + '/'
 GIT_PULL = "git pull"
 GIT_PUSH = "git push"
 GIT_COMMIT = "git commit -m "
@@ -42,9 +43,9 @@ SUBMODULE_DICT = make_submodule_dict()
 
 # Overwrite git clone submodule
 def g_clone():
-    for subdir in os.listdir(script_path + '/' + SUBMODULE_DIR):
+    for subdir in os.listdir(SUB_PATH):
         script(GIT_SUB_PULL + SUBMODULE_DIR + '/' + subdir)
-        if not os.path.exists(os.path.realpath(subdir)):
+        if not os.path.exists(SUB_PATH + subdir):
             script(RESET)
 
 
@@ -52,28 +53,28 @@ def g_clone():
 def g_commit(comment):
     # commit changes to each owned submodule
     comment = "'" + comment + "'"
-    for subdir in os.listdir(script_path + '/' + SUBMODULE_DIR):
+    for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
-        if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
+        if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule comit
-            os.chdir(os.path.realpath(subdir))
+            os.chdir(SUB_PATH + subdir)
             script(GIT_COMMIT + comment)
             os.chdir(script_path)
-            print("commit" + subdir + "done")
+            print("***commit " + SUB_PATH + subdir + " done***")
     script(GIT_COMMIT + comment)
 
 
 # Overwrite git push
 def g_push(): 
     # push changes to each owned submodule
-    for subdir in os.listdir(script_path + '/' + SUBMODULE_DIR):
+    for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
-        if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
+        if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule update
-            os.chdir(os.path.realpath(subdir))
+            os.chdir(SUB_PATH + subdir)
             script(GIT_PUSH)
             os.chdir(script_path)
-            print("push" + subdir + "done")
+            print("***push " + SUB_PATH + subdir + " done***")
     # push to origin master
     script(GIT_PUSH)
     
@@ -83,12 +84,13 @@ def g_pull():
     # pull zop main project
     script(GIT_PULL)
     # pull each owned zop submodule
-    for subdir in os.listdir(script_path + '/' + SUBMODULE_DIR):
+    for subdir in os.listdir(SUB_PATH):
         # check submodule folder exists or not
-        if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
+        if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule update
-            script(GIT_SUB_PULL + SUBMODULE_DIR + subdir)
-            print("pull " + SUBMODULE_DIR + "done")
+            script(GIT_SUB_PULL + SUBMODULE_DIR + "/" + subdir)
+            print(GIT_SUB_PULL + SUBMODULE_DIR + "/" + subdir)
+            print("***pull " + SUB_PATH + subdir + " done***")
 
 
 # Overwrite git branch create or switch
