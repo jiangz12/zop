@@ -20,7 +20,7 @@ GIT_ADD_ALL = "git add ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
-DIFF = "git diff --quiet --cached --exit-code"
+DIFF = "git diff --quiet"
 
 
 def script(cmd): # normally return 0, other means error
