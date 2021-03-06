@@ -63,6 +63,7 @@ def g_commit(comment):
             os.chdir(script_path)
             print("***commit " + SUB_PATH + subdir + " done***\n")
     script(GIT_COMMIT + comment)
+    print("***commit " + script_path + " done***\n")
 
 
 # Overwrite git push
@@ -78,12 +79,15 @@ def g_push():
             print("***push " + SUB_PATH + subdir + " done***\n")
     # push to origin master
     script(GIT_PUSH)
+    print("***push " + script_path + " done***\n")
     
 
 # Overwrite git pull
 def g_pull():
     # pull zop main project
     script(GIT_PULL)
+    print(GIT_PULL)
+    print("***pull " + script_path + " done***\n")
     # pull each owned zop submodule
     for subdir in os.listdir(SUB_PATH):
         # check submodule folder exists or not
