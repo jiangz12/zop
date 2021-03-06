@@ -58,6 +58,7 @@ def g_commit(comment):
         if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
+            print(os.path)
             script(GIT_COMMIT + comment)
             os.chdir(script_path)
             print("***commit " + SUB_PATH + subdir + " done***\n")
