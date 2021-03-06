@@ -94,14 +94,14 @@ def g_pull():
 def g_branch_co(branch_name):
     _script_branch_co_helper(branch_name)
 
-    selected = input("Choose a submodule, 0 for exit: ")
+    selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
             script("cd " + script_path + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_co_helper(branch_name)
             script("cd " + script_path)
         else:
-            selected = input("Invalid submodule, choose again: ")
+            selected = raw_input("Invalid submodule, choose again: ")
 
 # Helper function for git branch create
 def _script_branch_co_helper(branch_name):
@@ -114,14 +114,14 @@ def _script_branch_co_helper(branch_name):
 def g_branch_del(branch_name):
     _script_branch_del_helper(branch_name)
     script("rm -rf " + script_path + "/.git/refs/remotes/origin/" + branch_name)
-    selected = input("Choose a submodule, 0 for exit: ")
+    selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
             script("cd " + script_path + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_del_helper(branch_name)
             script("rm -rf " + script_path + "/.git/modules/src/components/" + SUBMODULE_DICT[selected] + "/refs/remotes/origin/" + branch_name)
         else:
-            selected = input("Invalid submodule, choose again: ")
+            selected = raw_input("Invalid submodule, choose again: ")
 
 # Helper function for git branch delete
 def _script_branch_del_helper(branch_name):
@@ -150,14 +150,14 @@ if __name__  == "__main__":
     elif args.commit:
         g_commit(args.commit)
     elif args.del_branch:
-        branch = input("Please give a branch name: ")
+        branch = raw_input("Please give a branch name: ")
         if branch != 'master':
             print("Branch to be deleted : " + branch)
             g_branch_del(branch)
         else:
             print("Invalid branch name to be deleted. Type -h for help")
     elif args.mk_branch:
-        branch = input("Please give a branch name: ")
+        branch = raw_input("Please give a branch name: ")
         if branch != 'master':
             print("Branch to be created : " + branch)
             g_branch_co(branch)
