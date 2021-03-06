@@ -24,6 +24,7 @@ RESET = "git reset --h"
 def script(cmd): # normally return 0, other means error
     ret = subprocess.call(cmd, shell = True)
     if ret != 0:
+        print(ret)
         print("Failed: " + cmd)
         #sys.exit(1)
     return ret
