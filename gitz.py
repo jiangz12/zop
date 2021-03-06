@@ -58,12 +58,9 @@ def g_commit(comment):
     comment = "'" + comment + "'"
     for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
-        print(SUB_PATH + subdir + DOT_GIT)
-        print(os.system(DIFF))
         if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
-            print(os.system(DIFF))
             if os.system(DIFF) == 1:
                 script(GIT_ADD_ALL)
                 script(GIT_COMMIT + comment)
