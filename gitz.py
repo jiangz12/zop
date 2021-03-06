@@ -20,7 +20,7 @@ GIT_ADD_ALL = "git add ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
-DIFF = "git diff --quiet "
+DIFF = "git diff --quiet --exit-code"
 
 
 def script(cmd): # normally return 0, other means error
@@ -65,10 +65,14 @@ def g_commit(comment):
                 script(GIT_ADD_ALL)
                 script(GIT_COMMIT + comment)
                 print("***commit " + SUB_PATH + subdir + " done***\n")
-            os.chdir(script_path)  
-    script(GIT_ADD_ALL)
-    script(GIT_COMMIT + comment)
-    print("***commit " + script_path + " done***\n")
+            os.chdir(script_path)
+    print(os.system(DIFF))
+    if subprocess.call(DIFF, shell = True) == 1:
+        script(GIT_ADD_ALL)
+        script(GIT_COMMIT + comment)
+        print("***commit " + script_path + " done***\n")
+    else:
+        print("nothing needs to commit")
 
 
 # Overwrite git push
