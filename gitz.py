@@ -93,11 +93,11 @@ def g_pull():
 # Overwrite git branch create or switch
 def g_branch_co(branch_name):
     _script_branch_co_helper(branch_name)
-
+    print(SUBMODULE_DICT)
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
-            script("cd " + script_path + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
+            script("cd " + script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_co_helper(branch_name)
             script("cd " + script_path)
         else:
@@ -114,10 +114,11 @@ def _script_branch_co_helper(branch_name):
 def g_branch_del(branch_name):
     _script_branch_del_helper(branch_name)
     script("rm -rf " + script_path + "/.git/refs/remotes/origin/" + branch_name)
+    print(SUBMODULE_DICT)
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
-            script("cd " + script_path + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
+            script("cd " + script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_del_helper(branch_name)
             script("rm -rf " + script_path + "/.git/modules/src/components/" + SUBMODULE_DICT[selected] + "/refs/remotes/origin/" + branch_name)
         else:
