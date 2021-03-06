@@ -56,9 +56,10 @@ def g_commit(comment):
         # check submodule .git file exists or not
         if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
             # excute submodule comit
-            script("cd " + os.path.realpath(subdir))
+            os.chdir(os.path.realpath(subdir))
             script(GIT_COMMIT + comment)
-            script("cd " + script_path)
+            os.chdir(script_path)
+            print("commit" + subdir + "done")
     script(GIT_COMMIT + comment)
 
 
@@ -69,9 +70,10 @@ def g_push():
         # check submodule .git file exists or not
         if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
             # excute submodule update
-            script("cd " + os.path.realpath(subdir))
+            os.chdir(os.path.realpath(subdir))
             script(GIT_PUSH)
-            script("cd " + script_path)
+            os.chdir(script_path)
+            print("push" + subdir + "done")
     # push to origin master
     script(GIT_PUSH)
     
@@ -86,8 +88,7 @@ def g_pull():
         if os.path.exists(os.path.realpath(subdir) + DOT_GIT):
             # excute submodule update
             script(GIT_SUB_PULL + SUBMODULE_DIR + subdir)
-            script("cd " + script_path)
-
+            print("pull " + SUBMODULE_DIR + "done")
 
 
 # Overwrite git branch create or switch
@@ -97,9 +98,9 @@ def g_branch_co(branch_name):
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
-            script("cd " + script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
+            os.chdir(script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_co_helper(branch_name)
-            script("cd " + script_path)
+            os.chdir(script_path)
         else:
             selected = raw_input("Invalid submodule, choose again: ")
 
@@ -118,8 +119,9 @@ def g_branch_del(branch_name):
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
-            script("cd " + script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
+            os.chdir(script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
             _script_branch_del_helper(branch_name)
+            os.chdir(script_path)
             script("rm -rf " + script_path + "/.git/modules/src/components/" + SUBMODULE_DICT[selected] + "/refs/remotes/origin/" + branch_name)
         else:
             selected = raw_input("Invalid submodule, choose again: ")
