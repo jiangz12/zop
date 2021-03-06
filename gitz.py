@@ -25,7 +25,7 @@ def script(cmd): # normally return 0, other means error
     ret = subprocess.call(cmd, shell = True)
     if ret != 0:
         print("Failed: " + cmd)
-        sys.exit(1)
+        #sys.exit(1)
     return ret
 
 
@@ -60,7 +60,7 @@ def g_commit(comment):
             os.chdir(SUB_PATH + subdir)
             script(GIT_COMMIT + comment)
             os.chdir(script_path)
-            print("***commit " + SUB_PATH + subdir + " done***")
+            print("***commit " + SUB_PATH + subdir + " done***\n")
     script(GIT_COMMIT + comment)
 
 
@@ -74,7 +74,7 @@ def g_push():
             os.chdir(SUB_PATH + subdir)
             script(GIT_PUSH)
             os.chdir(script_path)
-            print("***push " + SUB_PATH + subdir + " done***")
+            print("***push " + SUB_PATH + subdir + " done***\n")
     # push to origin master
     script(GIT_PUSH)
     
@@ -90,7 +90,7 @@ def g_pull():
             # excute submodule update
             script(GIT_SUB_PULL + SUBMODULE_DIR + "/" + subdir)
             print(GIT_SUB_PULL + SUBMODULE_DIR + "/" + subdir)
-            print("***pull " + SUB_PATH + subdir + " done***")
+            print("***pull " + SUB_PATH + subdir + " done***\n")
 
 
 # Overwrite git branch create or switch
