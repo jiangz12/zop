@@ -58,7 +58,6 @@ def g_commit(comment):
         if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
-            print(os.path)
             script(GIT_COMMIT + comment)
             os.chdir(script_path)
             print("***commit " + SUB_PATH + subdir + " done***\n")
@@ -86,7 +85,6 @@ def g_push():
 def g_pull():
     # pull zop main project
     script(GIT_PULL)
-    print(GIT_PULL)
     print("***pull " + script_path + " done***\n")
     # pull each owned zop submodule
     for subdir in os.listdir(SUB_PATH):
