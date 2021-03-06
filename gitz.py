@@ -20,7 +20,7 @@ GIT_ADD_ALL = "git add ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
-DIFF = "git diff --exit-code"
+DIFF = "git diff --quiet --exit-code"
 
 
 def script(cmd): # normally return 0, other means error
@@ -58,8 +58,7 @@ def g_commit(comment):
     comment = "'" + comment + "'"
     for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
-        print(os.system(DIFF))
-        if os.path.exists(SUB_PATH + subdir + DOT_GIT) and os.system(DIFF) == 1:
+        if os.path.exists(SUB_PATH + subdir + DOT_GIT) and os.system(DIFF) == 256:
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
             script(GIT_ADD_ALL)
