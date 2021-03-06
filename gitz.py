@@ -89,6 +89,7 @@ def g_pull():
             script("cd " + script_path)
 
 
+
 # Overwrite git branch create or switch
 def g_branch_co(branch_name):
     _script_branch_co_helper(branch_name)
@@ -129,8 +130,8 @@ def _script_branch_del_helper(branch_name):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--del_branch", type=str, default='', help='Branch to be deleted locally')
-parser.add_argument("-m", "--mk_branch", type=str, default='', help='Branch to be created both locally and remotely')
+parser.add_argument("-d", "--del_branch", help='Branch to be deleted locally', action = "store_true")
+parser.add_argument("-m", "--mk_branch", help='Branch to be created both locally and remotely', action = "store_true")
 parser.add_argument("-pl", "--pull", help='Pull and Sync current developing branch and submodules together', action = "store_true")
 parser.add_argument("-ps", "--push", help='Push current branch to master of submodules and main project', action = "store_true")
 parser.add_argument("-cl", "--clone", help='Clone the submodules from the remote repository', action = "store_true")
@@ -148,14 +149,14 @@ if __name__  == "__main__":
         g_clone()
     elif args.commit:
         g_commit(args.commit)
-    elif not args.del_branch:
+    elif args.del_branch:
         branch = input("Please give a branch name: ")
         if branch != 'master':
             print("Branch to be deleted : " + branch)
             g_branch_del(branch)
         else:
             print("Invalid branch name to be deleted. Type -h for help")
-    elif not args.mk_branch:
+    elif args.mk_branch:
         branch = input("Please give a branch name: ")
         if branch != 'master':
             print("Branch to be created : " + branch)
