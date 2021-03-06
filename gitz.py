@@ -19,12 +19,12 @@ GIT_PUSH = "git push"
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
+DIFF = "git diff --cached --exit-code"
 
 
 def script(cmd): # normally return 0, other means error
     ret = subprocess.call(cmd, shell = True)
     if ret != 0:
-        print(ret)
         print("Failed: " + cmd)
         #sys.exit(1)
     return ret
@@ -57,7 +57,7 @@ def g_commit(comment):
     comment = "'" + comment + "'"
     for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
-        if os.path.exists(SUB_PATH + subdir + DOT_GIT):
+        if os.path.exists(SUB_PATH + subdir + DOT_GIT) and os.system(DIFF) == 1:
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
             script(GIT_COMMIT + comment)
