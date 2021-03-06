@@ -66,7 +66,6 @@ def g_commit(comment):
                 script(GIT_COMMIT + comment)
                 print("***commit " + SUB_PATH + subdir + " done***\n")
             os.chdir(script_path)
-    print(subprocess.call(DIFF, shell = True))
     if subprocess.call(DIFF, shell = True) == 1:
         script(GIT_ADD_ALL)
         script(GIT_COMMIT + comment)
