@@ -108,7 +108,7 @@ def g_pull():
 # Overwrite git branch create or switch
 def g_branch_co(branch_name):
     _script_branch_co_helper(branch_name)
-    print(SUBMODULE_DICT)
+    print("\n" + SUBMODULE_DICT)
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
