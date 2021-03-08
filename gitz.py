@@ -24,6 +24,7 @@ SUB_PATH = script_path + '/' + SUBMODULE_DIR + '/'
 GIT_PULL = "git pull"
 GIT_PUSH = "git push"
 GIT_ADD_ALL = "git add ."
+GIT_INTEND_ADD_ALL = "git add -N ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
@@ -68,7 +69,7 @@ def g_commit(comment):
         if os.path.exists(SUB_PATH + subdir + DOT_GIT):
             # excute submodule comit
             os.chdir(SUB_PATH + subdir)
-            print(subprocess.call(DIFF, shell = True))
+            script(GIT_INTEND_ADD_ALL)
             if subprocess.call(DIFF, shell = True) == 1:
                 script(GIT_ADD_ALL)
                 script(GIT_COMMIT + comment)
