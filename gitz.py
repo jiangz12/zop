@@ -109,7 +109,7 @@ def g_pull():
 def g_branch_co(branch_name):
     _script_branch_co_helper(branch_name)
     print("\n" + SUBMODULE_DICT)
-    selected = raw_input("Choose a submodule, 0 for exit: ")
+    selected = raw_input("Choose a submodule ID, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
             os.chdir(script_path + "/" + SUBMODULE_DIR + "/" + SUBMODULE_DICT[selected])
@@ -129,7 +129,7 @@ def _script_branch_co_helper(branch_name):
 def g_branch_del(branch_name):
     _script_branch_del_helper(branch_name)
     script("rm -rf " + script_path + "/.git/refs/remotes/origin/" + branch_name)
-    print(SUBMODULE_DICT)
+    print("\n" + SUBMODULE_DICT)
     selected = raw_input("Choose a submodule, 0 for exit: ")
     while selected != "0":
         if selected in SUBMODULE_DICT.keys():
@@ -167,14 +167,14 @@ if __name__  == "__main__":
     elif args.commit:
         g_commit(args.commit)
     elif args.del_branch:
-        branch = raw_input("Please give a branch name: ")
+        branch = raw_input("Please enter a branch name: ")
         if branch != 'master':
             print("Branch to be deleted : " + branch)
             g_branch_del(branch)
         else:
             print("Invalid branch name to be deleted. Type -h for help")
     elif args.mk_branch:
-        branch = raw_input("Please give a branch name: ")
+        branch = raw_input("Please enter a branch name: ")
         if branch != 'master':
             print("Branch to be created : " + branch)
             g_branch_co(branch)
