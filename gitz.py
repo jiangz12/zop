@@ -63,7 +63,7 @@ def g_clone():
 # Overwrite git commit
 def g_commit(comment):
     # commit changes to each owned submodule
-    comment = "'" + comment + "'"
+    comment = '''"''' + comment + '''"'''
     for subdir in os.listdir(SUB_PATH):
         # check submodule .git file exists or not
         if os.path.exists(SUB_PATH + subdir + DOT_GIT):
