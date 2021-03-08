@@ -6,6 +6,13 @@ import os
 from os.path import isfile, join
 from os.path import isfile, join
 
+# python 2&3 input compatibility
+try:
+    input = raw_input
+except NameError:
+    pass
+
+# get this script real path
 script_path = os.path.realpath(__file__)
 script_path = os.path.dirname(script_path)
 
@@ -22,7 +29,7 @@ GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
 DIFF = "git diff --quiet --exit-code"
 
-
+# Execute each command with python subprocess
 def script(cmd): # normally return 0, other means error
     ret = subprocess.call(cmd, shell = True)
     if ret != 0:
