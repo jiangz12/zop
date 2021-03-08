@@ -27,7 +27,7 @@ GIT_ADD_ALL = "git add ."
 GIT_COMMIT = "git commit -m "
 GIT_SUB_PULL = "git submodule update --init "
 RESET = "git reset --h"
-DIFF = "git diff --quiet --exit-code"
+DIFF = "git diff-files --quiet --exit-code"
 
 # Execute each command with python subprocess
 def script(cmd): # normally return 0, other means error
